@@ -1,0 +1,21 @@
+@startuml UseCase
+left to right direction
+
+'====> Actors
+:Utente Registrato: as User
+:Utente Non Registrato: as Visitor
+:Dipendente: as Employee
+
+
+rectangle "Casi d'uso" {
+    User --> (registrazione)
+    Visitor -- (autenticazione)
+    User --> (noleggio)
+    User --> (riconsegna)
+    User --> (visualizza mappa)
+    Visitor --> (visualizza mappa)
+    Employee --> (gestione biciclette)
+    Employee --> (fornisce smart card)
+}
+
+@enduml
