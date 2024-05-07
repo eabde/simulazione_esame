@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#loginForm").submit(function(e){ 
+                e.preventDefault();
+                login(); 
+            });
+        });
+
+        function login() {
+            let username = $('#user').val();
+            let password = $('#pass').val();
+
+            $.ajax({
+                type: 'GET',
+                url: 'ajax/login.php',
+                data: { username: username, password: password },
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response)
+                    if (response.status === "ok") {
+                        window.location.href = 'view.php';
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("Errore nella richiesta AJAX.");
+                    console.log(xhr.responseText);
+                    
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="loginForm" method="post" action="login.php">
+        <input type="text" id="user" name="username" placeholder="Username" ><br>
+        <input type="password" id="pass" name="password" placeholder="Password" ><br>
+        <input type="submit" id="submit" value="Login">
+    </form>
+    <form action="registrazione.html" method="get">
+        <input type="submit" id="submit" formaction="registrazione.html" value="Registrati">
+    </form>
+</body>
+</html>
