@@ -1,45 +1,110 @@
 <html>
+
 <head>
     <title>Registrazione</title>
     <link rel="stylesheet" href="css/login.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $("#registrazioneForm").submit(function(e){ 
+        $(document).ready(function () {
+            caricaComuni();
+            caricaProvince();
+            caricaRegioni();
+
+            $("#registrazioneForm").submit(function (e) {
                 e.preventDefault();
-                register(); 
+                register();
             });
         });
 
+        function caricaProvince() {
+            $.get("ajax/getProvince.php", function(data, status){
+                $.each(data, function (index, item) {
+                    $('#provinceSelect').append($('<option>', {
+                        value: item.sigla_provincia,
+                        text: item.denominazione_provincia
+                    }));
+                });
+            }, "json"); 
+        }
+        function caricaComuni() {
+            $.get("ajax/getComuni.php", function(data, status){
+                $.each(data, function (index, item) {
+                    $('#comuniSelect').append($('<option>', {
+                        value: item.codice_istat,
+                        text: item.denominazione_ita
+                    }));
+                });
+            }, "json"); 
+        }
+        function caricaRegioni() {
+            $.get("ajax/getRegioni.php", function(data, status){
+                $.each(data, function (index, item) {
+                    $('#regioniSelect').append($('<option>', {
+                        value: item.codice_regione,
+                        text: item.denominazione_regione
+                    }));
+                });
+            }, "json"); 
+        }
         function register() {
-            let username = $('#user').val();
+            let email = $('#email').val();
+            let nome = $('#nome').val();
+            let cognome = $('#cognome').val();
+            let numTelefono = $('#numTelefono').val();
+            let cc = $('#cc').val();
             let password = $('#pass').val();
-
+            let provincia = $('#provinceSelect').val();
+    
             $.ajax({
                 type: 'POST',
                 url: 'ajax/registrazione.php',
-                data: { username: username, password: password },
+                data: { email: email, nome: nome, cognome: cognome, numTelefono: numTelefono, cc: cc, password: password, provincia: provincia },
                 dataType: 'json',
-                success: function(response) {
+                success: function (response) {
                     alert(response.message);
                     if (response.status === "success") {
                         window.location.href = 'login.html';
                     }
                 },
-                error: function(xhr, status, error) {
-                    alert("Errore nella richiesta AJAX.");
-                    console.log(xhr.responseText);
+                error: function (xhr, status, error) {
+                    alert("Errore nella registrazione: " + xhr.responseText);
                 }
             });
         }
     </script>
 </head>
+
 <body>
     <h1>Registrazione</h1>
     <form id="registrazioneForm" method="post">
-        <input type="text" id="user" name="username" placeholder="Username"><br>
+        <input type="text" id="email" name="email" placeholder="Email"><br>
+        <input type="text" id="nome" name="nome" placeholder="Nome"><br>
+        <input type="text" id="cognome" name="cognome" placeholder="Cognome"><br>
+
+        <input type="text" id="numTelefono" name="numTelefono" placeholder="Numero Telefono"><br>
+        <input type="text" id="cc" name="cc" placeholder="Numero carta di credito"><br>
+
+        <label for="">Indirizzo</label><br><br>
+        
+        <input type="text" id="via" name="via" placeholder="Via"><br>
+
+        <select id="comuniSelect">
+            <option value=""></option>
+        </select>
+
+        <select id="provinceSelect">
+            <option value=""></option>
+        </select>
+
+
+        <select id="regioniSelect">
+            <option value=""></option>
+        </select>
+
+    
         <input type="password" id="pass" name="password" placeholder="Password"><br>
         <input type="submit" id="submit" value="Registrati">
     </form>
 </body>
+
 </html>
