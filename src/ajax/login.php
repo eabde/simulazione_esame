@@ -11,24 +11,38 @@
     $response = array();
 
     try {
-        $username = $_GET['username'];
+        $email = $_GET['email'];
         $password = $_GET['password'];
 
         $hashed_password = md5($password);
 
-        $sql = "SELECT * FROM utenti WHERE username = ? AND password = ?";
+        //controllo admin
+        $sql = "SELECT * FROM admin WHERE email = ? AND password = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $username, $hashed_password);
+        $stmt->bind_param("ss", $email, $hashed_password);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            $_SESSION["username"] = $username;
             $response['status'] = "ok";
-            $response['message'] = "Login avvenuto con successo!";
+            $response['tipoUtente'] = "admin";
+            $response['message'] = "Login avvenuto con successo";
         } else {
-            $response['status'] = "error";
-            $response['message'] = "Credenziali non valide. Riprova.";
+            //controllo user
+            $sql = "SELECT * FROM utenti WHERE email = ? AND password = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $email, $hashed_password);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $response['status'] = "ok";
+                $response['tipoUtente'] = "user";
+                $response['message'] = "Login avvenuto con successo";
+            } else {
+                $response['status'] = "error";
+                $response['message'] = "Credenziali non valide. Riprova.";
+            }
         }
 
         $stmt->close();
@@ -36,7 +50,6 @@
     } catch (Exception $e) {
         $response['status'] = "error";
         $response['message'] = $e->getMessage();
-        echo json_encode($response);
     }
 
     echo json_encode($response);
