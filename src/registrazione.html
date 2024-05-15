@@ -6,13 +6,17 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function () {
-            caricaComuni();
             caricaProvince();
             caricaRegioni();
 
             $("#registrazioneForm").submit(function (e) {
                 e.preventDefault();
                 register();
+            });
+
+            $("#comuneInput").keyup(function () {
+                let query = $(this).val();
+                caricaComuni(query);
             });
         });
 
@@ -26,16 +30,7 @@
                 });
             }, "json"); 
         }
-        function caricaComuni() {
-            $.get("ajax/getComuni.php", function(data, status){
-                $.each(data, function (index, item) {
-                    $('#comuniSelect').append($('<option>', {
-                        value: item.codice_istat,
-                        text: item.denominazione_ita
-                    }));
-                });
-            }, "json"); 
-        }
+
         function caricaRegioni() {
             $.get("ajax/getRegioni.php", function(data, status){
                 $.each(data, function (index, item) {
@@ -46,6 +41,24 @@
                 });
             }, "json"); 
         }
+
+        function caricaComuni(query) {
+            if (query.length < 2) {
+
+                return;
+            }
+
+            $.get("ajax/getComuni.php", {query: query}, function(data, status){
+                $('#comuniSelect').empty();
+                $.each(data, function (index, item) {
+                    $('#comuniSelect').append($('<option>', {
+                        value: item.codice_istat,
+                        text: item.denominazione_ita
+                    }));
+                });
+            }, "json"); 
+        }
+
         function register() {
             let email = $('#email').val();
             let nome = $('#nome').val();
@@ -53,12 +66,26 @@
             let numTelefono = $('#numTelefono').val();
             let cc = $('#cc').val();
             let password = $('#pass').val();
-            let provincia = $('#provinceSelect').val();
-    
+            let provincia = $('#provinceSelect option:selected').text();
+            let via = $('#via').val();
+            let comune = $('#comuniSelect option:selected').text();
+            let regione = $('#regioniSelect option:selected').text();
+
             $.ajax({
                 type: 'POST',
                 url: 'ajax/registrazione.php',
-                data: { email: email, nome: nome, cognome: cognome, numTelefono: numTelefono, cc: cc, password: password, provincia: provincia },
+                data: {
+                    email: email,
+                    nome: nome,
+                    cognome: cognome,
+                    numTelefono: numTelefono,
+                    cc: cc,
+                    password: password,
+                    provincia: provincia,
+                    via: via,
+                    comune: comune,
+                    regione: regione
+                },
                 dataType: 'json',
                 success: function (response) {
                     alert(response.message);
@@ -88,20 +115,19 @@
         
         <input type="text" id="via" name="via" placeholder="Via"><br>
 
+        <input type="text" id="comuneInput" placeholder="Cerca Comune">
         <select id="comuniSelect">
-            <option value=""></option>
+            <option value="">Comune</option>
         </select>
 
         <select id="provinceSelect">
-            <option value=""></option>
+            <option value="">Provincia</option>
         </select>
-
 
         <select id="regioniSelect">
-            <option value=""></option>
+            <option value="">Regione</option>
         </select>
 
-    
         <input type="password" id="pass" name="password" placeholder="Password"><br>
         <input type="submit" id="submit" value="Registrati">
     </form>
