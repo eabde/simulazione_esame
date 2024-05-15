@@ -1,24 +1,23 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "gi_db_comuni";
+    require_once("../database/gi_db_comuni.php");
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if (isset($_GET['query'])) {
+        $query = $_GET['query'];
     }
+    
+    $query = $conn->real_escape_string($query);
 
-    $sql = "SELECT * FROM gi_comuni"; 
+    $sql = "SELECT codice_istat, denominazione_ita FROM gi_comuni WHERE denominazione_ita LIKE '$query%'";
     $result = $conn->query($sql);
 
     $comuni = array();
-    while($row = $result->fetch_assoc()) {
-        $comuni[] = $row;
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $comuni[] = $row;
+        }
     }
 
-    echo json_encode($comuni); 
+    echo json_encode($comuni);
 
     $conn->close();
 ?>

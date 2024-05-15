@@ -1,24 +1,17 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "gi_db_comuni";
+    require_once("../database/gi_db_comuni.php");
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "SELECT * FROM gi_regioni";
+    $sql = "SELECT codice_regione, denominazione_regione FROM gi_regioni";
     $result = $conn->query($sql);
 
     $regioni = array();
-    while($row = $result->fetch_assoc()) {
-        $regioni[] = $row;
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $regioni[] = $row;
+        }
     }
 
-    echo json_encode($regioni);  
+    echo json_encode($regioni);
 
     $conn->close();
 ?>
