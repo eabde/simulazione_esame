@@ -27,6 +27,7 @@
             $response['status'] = "ok";
             $response['tipoUtente'] = "admin";
             $response['message'] = "Login avvenuto con successo";
+            $_SESSION['admin'] = true;
         } else {
             //controllo user
             $sql = "SELECT * FROM utenti WHERE email = ? AND password = ?";
@@ -39,6 +40,8 @@
                 $response['status'] = "ok";
                 $response['tipoUtente'] = "user";
                 $response['message'] = "Login avvenuto con successo";
+                $_SESSION['user'] = true;
+                $_SESSION['email'] = $email;
             } else {
                 $response['status'] = "error";
                 $response['message'] = "Credenziali non valide. Riprova.";
