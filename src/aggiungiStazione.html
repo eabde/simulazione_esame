@@ -2,39 +2,66 @@
 
 <head>
     <title>Crea Stazione</title>
+    <link rel="stylesheet" href="css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function(){
+            $("#creaStazioneForm").submit(function(e){ 
+                e.preventDefault();
+                aggiungiStazione(); 
+            });
+        });
+        function aggiungiStazione(){
+            let numSlot = $('#numSlot').val();
+            let numBiciclette = $('#numBiciclette').val();
+            let via = $('#via').val();
+            let citta = $('#citta').val();
+            let provincia = $('#provincia').val();
+            let regione = $('#regione').val();
+            $.ajax({
+                url: 'ajax/aggiungiStazione.php',
+                type: 'POST',
+                data: {
+                    numSlot: numSlot,
+                    numBiciclette: numBiciclette,
+                    via: via,
+                    citta: citta,
+                    provincia: provincia,
+                    regione: regione,
+                },
+                dataType: 'json',
+                success: function (response) {
+                    alert(response.message);
+                },
+                error: function () {
+                    alert('Si e verificato un errore durante la creazione della stazione.');
+                }
+            });
+        };
+    </script>
 </head>
 
 <body>
-    <h1>Crea una nuova stazione</h1>
+    <h1>Aggiungi una nuova stazione</h1>
 
     <form id="creaStazioneForm">
-        <label for="numSlot">Numero di slot:</label><br>
-        <input type="number" id="numSlot" name="numSlot"><br>
-        <label for="numBiciclette">Numero di biciclette:</label><br>
-        <input type="number" id="numBiciclette" name="numBiciclette"><br>
-        <label for="indirizzo">Indirizzo:</label><br>
-        <input type="text" id="indirizzo" name="indirizzo"><br>
-        <input type="submit" value="Crea Stazione">
+        <input type="number" id="numSlot" name="numSlot" placeholder="Numero slot"><br>
+        <input type="number" id="numBiciclette" name="numBiciclette" placeholder="Numero biciclette"><br>
+        <input type="text" id="via" name="via" placeholder="Via"><br>
+
+        <label for="citta">Citta</label><br>
+        <input type="text" id="citta" placeholder="Milano" name="citta" value="Milano" disabled><br>
+
+        <label for="provincia">Provincia</label><br>
+        <input type="text" id="provincia" placeholder="Milano" name="provincia" value="Milano" disabled><br>
+
+        <label for="regione">Regione</label><br>
+        <input type="text" id="regione" placeholder="Lombardia" name="regione" value="Lombardia" disabled><br>
+
+        <input type="submit" id="submit" value="Aggiungi Stazione">
     </form>
 
-    <script>
-        $('#creaStazioneForm').submit(function (e) {
-            e.preventDefault();
-
-            $.ajax({
-                url: 'ajax/creaStazione.php',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function (response) {
-                    alert(response);
-                },
-                error: function () {
-                    alert('Si è verificato un errore durante la creazione della stazione.');
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

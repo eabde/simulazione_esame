@@ -12,7 +12,7 @@
         $cartaCredito = $_POST['cc'];
         $password = $_POST['password'];
         $via = $_POST['via'];
-        $comune = $_POST['comune'];
+        $citta = $_POST['citta'];
         $provincia = $_POST['provincia'];
         $regione = $_POST['regione'];
 
@@ -29,34 +29,20 @@
         } else {
             $hashed_password = md5($password);
 
-            $insert_indirizzo_query = "INSERT INTO indirizzi (via, città, provincia, regione) VALUES (?, ?, ?, ?)";
-            $insert_indirizzo_stmt = $conn->prepare($insert_indirizzo_query);
-            $insert_indirizzo_stmt->bind_param("ssss", $via, $comune,$provincia, $regione);
+            $insert_utente_query = "INSERT INTO utenti (nome, cognome, email, numTelefono, cartaCredito, password, via, città, provincia, regione) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $insert_utente_stmt = $conn->prepare($insert_utente_query);
+            $insert_utente_stmt->bind_param("ssssssssss", $nome, $cognome, $email, $numTelefono, $cartaCredito, $hashed_password, $via, $citta, $provincia ,$regione);
 
-            if ($insert_indirizzo_stmt->execute()) {
-                $indirizzo_id = $conn->insert_id;
-
-                $insert_utente_query = "INSERT INTO utenti (nome, cognome, email, numTelefono, cartaCredito, password, indirizzo) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                $insert_utente_stmt = $conn->prepare($insert_utente_query);
-                $insert_utente_stmt->bind_param("ssssssi", $nome, $cognome, $email, $numTelefono, $cartaCredito, $hashed_password, $indirizzo_id);
-
-                if ($insert_utente_stmt->execute()) {
-                    $conn->commit();
-                    $response['status'] = "success";
-                    $response['message'] = "Registrazione avvenuta con successo!";
-                } else {
-                    $conn->rollback();
-                    $response['status'] = "error";
-                    $response['message'] = "Errore durante la registrazione dell'utente. Riprova.";
-                }
-
-                $insert_utente_stmt->close();
+            if ($insert_utente_stmt->execute()) {
+                $response['status'] = "success";
+                $response['message'] = "Registrazione avvenuta con successo!";
             } else {
-                $conn->rollback();
                 $response['status'] = "error";
-                $response['message'] = "Errore durante la registrazione dell'indirizzo. Riprova.";
+                $response['message'] = "Errore durante la registrazione dell'utente. Riprova.";
             }
-            $insert_indirizzo_stmt->close();
+
+            $insert_utente_stmt->close();
+     
         }
 
         $check_stmt->close();
