@@ -22,9 +22,7 @@ function getCoordinates($address) {
 }
 
 try {
-    $sql = "SELECT s.*, i.via , i.città, i.provincia, i.regione 
-            FROM stazioni s 
-            JOIN indirizzi i ON s.indirizzo = i.ID";
+    $sql = "SELECT * FROM stazioni s ";
     $result = $conn->query($sql);
 
     $stazioni = array();

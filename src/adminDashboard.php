@@ -61,10 +61,6 @@
         <button type="button" class="btn btn-warning" id="editStationInfoBtn">Modifica informazioni stazioni</button>
         <button type="button" class="btn btn-warning" id="viewMapBtn">Visualizza mappa</button>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2D2JNzcVXFRwo1+ygEcFaClyzRmNXSi6l7z4PIMoD9pw0xGJLMqpw0Q25zU"
-            crossorigin="anonymous"></script>
 </body>
 
 </html>

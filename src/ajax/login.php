@@ -37,11 +37,14 @@
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+
                 $response['status'] = "ok";
                 $response['tipoUtente'] = "user";
                 $response['message'] = "Login avvenuto con successo";
+                
                 $_SESSION['user'] = true;
-                $_SESSION['email'] = $email;
+                $_SESSION['IdUtente'] = $row['id'];
             } else {
                 $response['status'] = "error";
                 $response['message'] = "Credenziali non valide. Riprova.";

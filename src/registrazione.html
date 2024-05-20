@@ -14,32 +14,32 @@
                 register();
             });
 
-            $("#comuneInput").keyup(function () {
+            $("#cittaInput").keyup(function () {
                 let query = $(this).val();
                 caricaComuni(query);
             });
         });
 
         function caricaProvince() {
-            $.get("ajax/getProvince.php", function(data, status){
+            $.get("ajax/getProvince.php", function (data, status) {
                 $.each(data, function (index, item) {
                     $('#provinceSelect').append($('<option>', {
                         value: item.sigla_provincia,
                         text: item.denominazione_provincia
                     }));
                 });
-            }, "json"); 
+            }, "json");
         }
 
         function caricaRegioni() {
-            $.get("ajax/getRegioni.php", function(data, status){
+            $.get("ajax/getRegioni.php", function (data, status) {
                 $.each(data, function (index, item) {
                     $('#regioniSelect').append($('<option>', {
                         value: item.codice_regione,
                         text: item.denominazione_regione
                     }));
                 });
-            }, "json"); 
+            }, "json");
         }
 
         function caricaComuni(query) {
@@ -48,15 +48,15 @@
                 return;
             }
 
-            $.get("ajax/getComuni.php", {query: query}, function(data, status){
-                $('#comuniSelect').empty();
+            $.get("ajax/getComuni.php", { query: query }, function (data, status) {
+                $('#cittaSelect').empty();
                 $.each(data, function (index, item) {
-                    $('#comuniSelect').append($('<option>', {
+                    $('#cittaSelect').append($('<option>', {
                         value: item.codice_istat,
                         text: item.denominazione_ita
                     }));
                 });
-            }, "json"); 
+            }, "json");
         }
 
         function register() {
@@ -66,9 +66,9 @@
             let numTelefono = $('#numTelefono').val();
             let cc = $('#cc').val();
             let password = $('#pass').val();
-            let provincia = $('#provinceSelect option:selected').text();
             let via = $('#via').val();
-            let comune = $('#comuniSelect option:selected').text();
+            let provincia = $('#provinceSelect option:selected').text();
+            let citta = $('#cittaSelect option:selected').text();
             let regione = $('#regioniSelect option:selected').text();
 
             $.ajax({
@@ -83,7 +83,7 @@
                     password: password,
                     provincia: provincia,
                     via: via,
-                    comune: comune,
+                    citta: citta,
                     regione: regione
                 },
                 dataType: 'json',
@@ -112,12 +112,12 @@
         <input type="text" id="cc" name="cc" placeholder="Numero carta di credito"><br>
 
         <label for="">Indirizzo</label><br><br>
-        
+
         <input type="text" id="via" name="via" placeholder="Via"><br>
 
-        <input type="text" id="comuneInput" placeholder="Cerca Comune">
-        <select id="comuniSelect">
-            <option value="">Comune</option>
+        <input type="text" id="cittaInput" placeholder="Cerca Citta">
+        <select id="cittaSelect">
+            <option value="">Citta</option>
         </select>
 
         <select id="provinceSelect">
