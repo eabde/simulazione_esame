@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>Crea Stazione</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Crea una nuova stazione</h1>
+
+    <form id="creaStazioneForm">
+        <label for="numSlot">Numero di slot:</label><br>
+        <input type="number" id="numSlot" name="numSlot"><br>
+        <label for="numBiciclette">Numero di biciclette:</label><br>
+        <input type="number" id="numBiciclette" name="numBiciclette"><br>
+        <label for="indirizzo">Indirizzo:</label><br>
+        <input type="text" id="indirizzo" name="indirizzo"><br>
+        <input type="submit" value="Crea Stazione">
+    </form>
+
+    <script>
+        $('#creaStazioneForm').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: 'ajax/creaStazione.php',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    alert(response);
+                },
+                error: function () {
+                    alert('Si è verificato un errore durante la creazione della stazione.');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
