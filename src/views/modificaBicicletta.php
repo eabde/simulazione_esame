@@ -1,7 +1,15 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['admin'])) {
+        echo "<script>alert('Utente non registrato');</script>";
+        header("Location: ../ajax/logout.php");
+        exit();
+    }
+?>
 <html>
 <head>
     <title>Modifica Bicicletta</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -25,7 +33,7 @@
             let codiceTag = $('#codiceTag').val();
             let gps = $('#gps').val();
             $.ajax({
-                url: 'ajax/updateBicicletta.php',
+                url: '../ajax/biciclette/updateBicicletta.php',
                 type: 'POST',
                 data: {
                     id: id,

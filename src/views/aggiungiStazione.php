@@ -1,8 +1,16 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['admin'])) {
+        echo "<script>alert('Utente non registrato');</script>";
+        header("Location: ../ajax/logout.php");
+        exit();
+    }
+?>
 <html>
 
 <head>
-    <title>Crea Stazione</title>
-    <link rel="stylesheet" href="css/login.css">
+    <title>Aggiungi Stazione</title>
+    <link rel="stylesheet" href="../css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 
@@ -20,7 +28,7 @@
             let provincia = $('#provincia').val();
             let regione = $('#regione').val();
             $.ajax({
-                url: 'ajax/aggiungiStazione.php',
+                url: '../ajax/stazioni/aggiungiStazione.php',
                 type: 'POST',
                 data: {
                     numSlot: numSlot,
@@ -33,7 +41,7 @@
                 dataType: 'json',
                 success: function (response) {
                     alert(response.message);
-                    window.location.href = "mappa.html";
+                    window.location.href = "../mappa.html";
                 },
                 error: function () {
                     alert('Si e verificato un errore durante la creazione della stazione.');

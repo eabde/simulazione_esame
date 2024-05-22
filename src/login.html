@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -17,16 +17,16 @@
 
             $.ajax({
                 type: 'GET',
-                url: 'ajax/login.php',
+                url: 'ajax/auth/login.php',
                 data: { email: email, password: password },
                 dataType: 'json',
                 success: function(response) {
                     console.log(response);
                     if (response.status === "ok") {
                         if (response.tipoUtente === "admin") {
-                            window.location.href = 'adminDashboard.php';
+                            window.location.href = 'views/adminDashboard.php';
                         } else if (response.tipoUtente === "user") {
-                            window.location.href = 'userDashboard.php';
+                            window.location.href = 'views/userDashboard.php';
                         }
                     } else {
                         alert(response.message);

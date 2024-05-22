@@ -1,5 +1,5 @@
 <?php
-    require_once("../database/gi_db_comuni.php");
+    require_once("../../database/gi_db_comuni.php");
 
     if (isset($_GET['query'])) {
         $query = $_GET['query'];

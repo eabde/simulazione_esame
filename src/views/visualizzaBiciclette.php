@@ -2,7 +2,7 @@
     session_start();
     if (!isset($_SESSION['admin'])) {
         echo "<script>alert('Utente non registrato');</script>";
-        header("Location: logout.php");
+        header("Location: ../ajax/logout.php");
         exit();
     }
 ?>
@@ -13,13 +13,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>View Stazioni</title>
+    <title>View Biciclette</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function(){
             $.ajax({
                 type: 'GET',
-                url: 'ajax/getBiciclette.php',
+                url: '../ajax/biciclette/getBiciclette.php',
                 dataType: 'json',
                 success: function(response) {
                     var table = $('#tabellaBiciclette');
@@ -65,7 +65,7 @@
                         if (confirm('Sei sicuro di voler eliminare la bicicletta con ID: ' + id + '?')) {
                             $.ajax({
                                 type: 'GET',
-                                url: 'ajax/eliminaBicicletta.php',
+                                url: '../ajax/biciclette/eliminaBicicletta.php',
                                 data: { id: id },
                                 success: function(response) {
                                     alert('Bicicletta eliminata con successo.');
@@ -82,7 +82,7 @@
                     $('.aggiungi').click(function(){
                         $.ajax({
                             type: 'GET',
-                            url: 'ajax/createBicicletta.php',
+                            url: '../ajax/biciclette/createBicicletta.php',
                             dataType: 'json',
                             success: function(response) {
                                 alert('Bicicletta aggiunta con successo.');

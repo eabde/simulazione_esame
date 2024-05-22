@@ -1,5 +1,5 @@
 <?php
-    require_once("../database/gi_db_comuni.php");
+    require_once("../../database/gi_db_comuni.php");
 
     $sql = "SELECT sigla_provincia, denominazione_provincia FROM gi_province";
     $result = $conn->query($sql);

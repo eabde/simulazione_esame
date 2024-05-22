@@ -1,6 +1,6 @@
 <?php
 
-require_once("../database/database.php");
+require_once("../../database/database.php");
 
 function generateRandomString($length) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

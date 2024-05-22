@@ -1,5 +1,5 @@
 <?php
-    require_once("../database/database.php");
+    require_once("../../database/database.php");
 
     $numSlot = $_POST['numSlot'];
     $numBiciclette = $_POST['numBiciclette'];

@@ -1,7 +1,15 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['admin'])) {
+        echo "<script>alert('Utente non registrato');</script>";
+        header("Location: ../ajax/logout.php");
+        exit();
+    }
+?>
 <html>
 <head>
     <title>Modifica Stazione</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -32,7 +40,7 @@
             let provincia = $('#provincia').val();
             let regione = $('#regione').val();
             $.ajax({
-                url: 'ajax/updateStazione.php',
+                url: '../ajax/stazioni/updateStazione.php',
                 type: 'POST',
                 data: {
                     id: id,

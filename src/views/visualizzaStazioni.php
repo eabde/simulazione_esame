@@ -2,7 +2,7 @@
     session_start();
     if (!isset($_SESSION['admin'])) {
         echo "<script>alert('Utente non registrato');</script>";
-        header("Location: logout.php");
+        header("Location: ../ajax/logout.php");
         exit();
     }
 ?>
@@ -19,7 +19,7 @@
         $(document).ready(function(){
             $.ajax({
                 type: 'GET',
-                url: 'ajax/getStazioni.php',
+                url: '../ajax/stazioni/getStazioni.php',
                 dataType: 'json',
                 success: function(response) {
                     var table = $('#tabellaStazioni');
@@ -64,7 +64,7 @@
                         if (confirm('Sei sicuro di voler eliminare la stazione con ID: ' + id + '?')) {
                             $.ajax({
                                 type: 'GET',
-                                url: 'ajax/eliminaStazione.php',
+                                url: '../ajax/stazioni/eliminaStazione.php',
                                 data: { id: id },
                                 success: function(response) {
                                     alert('Stazione eliminata con successo.');

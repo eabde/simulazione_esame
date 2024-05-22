@@ -1,8 +1,7 @@
 <?php
 
 header('Content-Type: application/json');
-require_once("../database/database.php");
-
+require_once("../../database/database.php");
 
 $response = array();
 

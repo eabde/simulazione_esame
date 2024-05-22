@@ -1,5 +1,5 @@
 <?php
-    require_once("../database/gi_db_comuni.php");
+    require_once("../../database/gi_db_comuni.php");
 
     $sql = "SELECT codice_regione, denominazione_regione FROM gi_regioni";
     $result = $conn->query($sql);

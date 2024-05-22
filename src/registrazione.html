@@ -2,7 +2,7 @@
 
 <head>
     <title>Registrazione</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -23,7 +23,7 @@
         });
 
         function caricaProvince() {
-            $.get("ajax/getProvince.php", function (data, status) {
+            $.get("ajax/comuni/getProvince.php", function (data, status) {
                 $.each(data, function (index, item) {
                     $('#provinceSelect').append($('<option>', {
                         value: item.sigla_provincia,
@@ -34,7 +34,7 @@
         }
 
         function caricaRegioni() {
-            $.get("ajax/getRegioni.php", function (data, status) {
+            $.get("ajax/comuni/getRegioni.php", function (data, status) {
                 $.each(data, function (index, item) {
                     $('#regioniSelect').append($('<option>', {
                         value: item.codice_regione,
@@ -49,7 +49,7 @@
                 return;
             }
 
-            $.get("ajax/getComuni.php", { query: query }, function (data, status) {
+            $.get("ajax/comuni/getComuni.php", { query: query }, function (data, status) {
                 $('#cittaSelect').empty();
                 $.each(data, function (index, item) {
                     $('#cittaSelect').append($('<option>', {
@@ -101,7 +101,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'ajax/registrazione.php',
+                url: 'ajax/auth/registrazione.php',
                 data: {
                     email: email,
                     nome: nome,
