@@ -2,7 +2,7 @@
     session_start();
     if (!isset($_SESSION['admin'])) {
         echo "<script>alert('Utente non registrato');</script>";
-        header("Location: ../ajax/logout.php");
+        header("Location: ../logout.php");
         exit();
     }
 ?>
@@ -55,7 +55,7 @@
                         };
 
                         localStorage.setItem('stazione', JSON.stringify(stazione));
-                        window.location.href = 'modificaStazione.html';
+                        window.location.href = 'modificaStazione.php';
                     });
 
 

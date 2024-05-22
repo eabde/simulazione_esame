@@ -2,7 +2,7 @@
     session_start();
     if (!isset($_SESSION['admin'])) {
         echo "<script>alert('Utente non registrato');</script>";
-        header("Location: ../ajax/logout.php");
+        header("Location: ../logout.php");
         exit();
     }
 ?>
@@ -56,7 +56,7 @@
                         };
 
                         localStorage.setItem('bicicletta', JSON.stringify(bicicletta));
-                        window.location.href = 'modificaBicicletta.html';
+                        window.location.href = 'modificaBicicletta.php';
                     });
 
 

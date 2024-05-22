@@ -2,7 +2,7 @@
 session_start();
 if (!isset($_SESSION['user'])) {
     echo "<script>alert('Utente non registrato');</script>";
-    header("Location: ../ajax/logout.php");
+    header("Location: ../logout.php");
     exit; 
 }
 ?>

@@ -2,7 +2,7 @@
     session_start();
     if (!isset($_SESSION['user'])) {
         echo "<script>alert('Utente non registrato');</script>";
-        header("Location: ../ajax/logout.php");
+        header("Location: ../logout.php");
         exit; 
     }
 ?>
@@ -46,7 +46,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="btn btn-primary" href="logout.php">Logout</a>
+                        <a class="btn btn-primary" href="../logout.php">Logout</a>
                     </li>
                 </ul>
             </div>

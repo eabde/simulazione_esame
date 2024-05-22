@@ -2,7 +2,7 @@
     session_start();
     if (!isset($_SESSION['admin'])) {
         echo "<script>alert('Utente non registrato');</script>";
-        header("Location: ../ajax/logout.php");
+        header("Location: ../logout.php");
         exit; 
     }
 ?>
@@ -22,7 +22,7 @@
     <script>
         $(document).ready(function(){
             $('#addStationBtn').click(function(){
-                window.location.href = 'aggiungiStazione.html';
+                window.location.href = 'aggiungiStazione.php';
             });
             $('#viewBiciBtn').click(function(){
                 window.location.href = 'visualizzaBiciclette.php';
@@ -49,7 +49,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                    <a class="btn btn-primary" href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>
