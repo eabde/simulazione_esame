@@ -11,7 +11,9 @@
 
             $("#registrazioneForm").submit(function (e) {
                 e.preventDefault();
-                register();
+                if (validateForm()) {
+                    register();
+                }
             });
 
             $("#cittaInput").keyup(function () {
@@ -44,7 +46,6 @@
 
         function caricaComuni(query) {
             if (query.length < 2) {
-
                 return;
             }
 
@@ -57,6 +58,33 @@
                     }));
                 });
             }, "json");
+        }
+
+        function validateForm() {
+            let email = $('#email').val();
+            let numTelefono = $('#numTelefono').val();
+            let cc = $('#cc').val();
+            let valid = true;
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let phonePattern = /^[0-9]{10}$/;
+            let ccPattern = /^[0-9]{16}$/;
+
+            if (!emailPattern.test(email)) {
+                alert('Email non valida.');
+                valid = false;
+            }
+
+            if (!phonePattern.test(numTelefono)) {
+                alert('Numero di telefono non valido. Deve contenere 10 cifre.');
+                valid = false;
+            }
+
+            if (!ccPattern.test(cc)) {
+                alert('Numero di carta di credito non valido. Deve contenere 16 cifre.');
+                valid = false;
+            }
+
+            return valid;
         }
 
         function register() {
@@ -111,8 +139,7 @@
         <input type="text" id="numTelefono" name="numTelefono" placeholder="Numero Telefono"><br>
         <input type="text" id="cc" name="cc" placeholder="Numero carta di credito"><br>
 
-        <label for="">Indirizzo</label><br><br>
-
+        <label for="via">Indirizzo</label><br><br>
         <input type="text" id="via" name="via" placeholder="Via"><br>
 
         <input type="text" id="cittaInput" placeholder="Cerca Citta">
