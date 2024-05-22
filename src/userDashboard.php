@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        echo "<script>alert('Utente non registrato');</script>";
+        header("Location: logout.php");
+        exit; 
+    }
+?>
 <html>
 
     <head>
@@ -7,6 +15,25 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="css/dashboard.css">
         <title>User</title>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+        <script>
+        $(document).ready(function(){
+            $('#viewMapBtn').click(function(){
+                window.location.href = 'mappa.html';
+            });
+            $('#tratteBtn').click(function(){
+                window.location.href = '';
+            });
+            $('#riepiloghiBtn').click(function(){
+                window.location.href = '';
+            });
+            $('#profiloBtn').click(function(){
+                window.location.href = 'userProfile.php';
+            });
+        });
+    </script>
+
     </head>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -28,9 +55,10 @@
 
     <body>
         <div class="btn-container">
-        <button type="button" class="btn btn-warning">Noleggia bicicletta</button>
-            <button type="button" class="btn btn-warning">Riconsegna bicicletta</button>
-            <button type="button" class="btn btn-warning">Visualizza mappa</button>
+            <button type="button" id="viewMapBtn" class="btn btn-warning">Visualizza mappa</button>
+            <button type="button" id="tratteBtn" class="btn btn-warning">Visualizza tratte percorse</button>
+            <button type="button" id="riepiloghiBtn" class="btn btn-warning">Visualizza riepiloghi</button>
+            <button type="button" id="profiloBtn" class="btn btn-warning">Profilo</button>
         </div>
     </body>
 
