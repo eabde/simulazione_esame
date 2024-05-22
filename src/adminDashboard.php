@@ -24,8 +24,11 @@
             $('#addStationBtn').click(function(){
                 window.location.href = 'aggiungiStazione.html';
             });
-            $('#addBikeBtn').click(function(){
-                window.location.href = 'aggiungiBici.html';
+            $('#viewBiciBtn').click(function(){
+                window.location.href = 'visualizzaBiciclette.php';
+            });
+            $('#viewStazioniBtn').click(function(){
+                window.location.href = 'visualizzaStazioni.php';
             });
             $('#viewMapBtn').click(function(){
                 window.location.href = 'mappa.html';
@@ -56,9 +59,8 @@
 <body>
     <div class="btn-container">
         <button type="button" class="btn btn-warning" id="addStationBtn">Aggiungi stazione</button>
-        <button type="button" class="btn btn-warning" id="addBikeBtn">Aggiungi bicicletta</button>
-        <button type="button" class="btn btn-warning" id="editBikeInfoBtn">Modifica informazioni biciclette</button>
-        <button type="button" class="btn btn-warning" id="editStationInfoBtn">Modifica informazioni stazioni</button>
+        <button type="button" class="btn btn-warning" id="viewBiciBtn">Visualizza informazioni biciclette</button>
+        <button type="button" class="btn btn-warning" id="viewStazioniBtn">Visualizza informazioni stazioni</button>
         <button type="button" class="btn btn-warning" id="viewMapBtn">Visualizza mappa</button>
     </div>
 </body>

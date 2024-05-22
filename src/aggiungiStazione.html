@@ -33,6 +33,7 @@
                 dataType: 'json',
                 success: function (response) {
                     alert(response.message);
+                    window.location.href = "mappa.html";
                 },
                 error: function () {
                     alert('Si e verificato un errore durante la creazione della stazione.');
@@ -43,7 +44,7 @@
 </head>
 
 <body>
-    <h1>Aggiungi una nuova stazione</h1>
+    <h1>Aggiungi stazione</h1>
 
     <form id="creaStazioneForm">
         <input type="number" id="numSlot" name="numSlot" placeholder="Numero slot"><br>

@@ -7,11 +7,11 @@ session_start();
 $response = array();
 
 try {
-    $email = $_SESSION["email"];
+    $IdUtente = $_SESSION["IdUtente"];
     
-    $sql = "SELECT * FROM utenti WHERE email = ?";
+    $sql = "SELECT * FROM utenti WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
+    $stmt->bind_param("s", $IdUtente);
     $stmt->execute();
     $result = $stmt->get_result();
 
