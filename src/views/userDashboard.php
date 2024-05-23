@@ -26,7 +26,7 @@
                 window.location.href = '';
             });
             $('#riepiloghiBtn').click(function(){
-                window.location.href = '';
+                window.location.href = 'visualizzaRiepiloghi.php';
             });
             $('#profiloBtn').click(function(){
                 window.location.href = 'userProfile.php';
