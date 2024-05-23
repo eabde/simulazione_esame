@@ -6,5 +6,5 @@ if(!isset($_SESSION)){
 session_unset();
 session_destroy();
 
-header("Location: mappa.html");
+header("Location: mappa.php");
 exit();

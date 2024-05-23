@@ -73,7 +73,20 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="btn btn-primary" href="login.html">Accedi</a>
+                        <?php
+                            session_start();
+                            if (isset($_SESSION['admin'])) {
+                                // Utente loggato come admin
+                                echo '<a class="btn btn-primary" href="views/adminDashboard.php">Dashboard Admin</a>';
+                            } elseif (isset($_SESSION['user']) ) {
+                                // Utente loggato come user
+                                echo '<a class="btn btn-primary" href="views/userDashboard.php">Dashboard Utente</a>';
+                            } else {
+                                // Nessun utente loggato
+                                echo '<a class="btn btn-primary" href="login.html">Accedi</a>';
+                            }
+                        ?>
+                        
                     </li>
                 </ul>
             </div>
@@ -81,5 +94,6 @@
     </nav>
     <div id="map"></div>
 </body>
+
 
 </html>

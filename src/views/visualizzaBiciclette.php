@@ -24,6 +24,10 @@
                 success: function(response) {
                     var table = $('#tabellaBiciclette');
                     $.each(response.data, function(index, bicicletta) {
+                        var manutenzioneButton = '';
+                    if (bicicletta.distanzaPercorsa > 3) {
+                        manutenzioneButton = '<td><button class="manutenzione btn btn-success" data-id="' + bicicletta.ID + '">Manutenzione</button></td>';
+                    }
                         table.append(
                             '<tr>' +
                                 '<td>' + bicicletta.ID + '</td>' +
@@ -38,7 +42,8 @@
                                 '<td>' +
                                     '<button class="elimina btn btn-danger" data-id="' + bicicletta.ID + '">Elimina</button>' +
                                 '</td>' +
-                                
+                                '</td>' +
+                                    manutenzioneButton +
                             '</tr>'
                         );
                     });
@@ -59,6 +64,24 @@
                         window.location.href = 'modificaBicicletta.php';
                     });
 
+
+                    $('.manutenzione').click(function(){
+                        var id = $(this).data('id');
+                        $.ajax({
+                            type: 'GET',
+                            url: '../ajax/biciclette/manutenzioneBici.php',
+                            data: { id: id },
+                            success: function(response) {
+                                alert('Bicicletta mantenuta con successo');
+                                location.reload();
+                            },
+                            error: function(xhr, status, error) {
+                                alert('Errore nella richiesta AJAX.');
+                                console.log(xhr.responseText);
+                            }
+                        });
+                        
+                    });
 
                     $('.elimina').click(function(){
                         var id = $(this).data('id');
@@ -111,7 +134,7 @@
             <th>codiceTag</th>
             <th>latitudine</th>
             <th>longitudine</th>
-            <th>distanza percorsa</th>
+            <th>distanza percorsa km</th>
             <th>GPS</th>
         </tr>
     </table>

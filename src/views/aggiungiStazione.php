@@ -41,7 +41,7 @@
                 dataType: 'json',
                 success: function (response) {
                     alert(response.message);
-                    window.location.href = "../mappa.html";
+                    window.location.href = "../mappa.php";
                 },
                 error: function () {
                     alert('Si e verificato un errore durante la creazione della stazione.');

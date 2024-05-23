@@ -20,7 +20,7 @@
         <script>
         $(document).ready(function(){
             $('#viewMapBtn').click(function(){
-                window.location.href = '../mappa.html';
+                window.location.href = '../mappa.php';
             });
             $('#tratteBtn').click(function(){
                 window.location.href = '';

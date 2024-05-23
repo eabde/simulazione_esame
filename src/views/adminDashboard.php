@@ -31,7 +31,7 @@
                 window.location.href = 'visualizzaStazioni.php';
             });
             $('#viewMapBtn').click(function(){
-                window.location.href = '../mappa.html';
+                window.location.href = '../mappa.php';
             });
         });
     </script>

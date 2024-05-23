@@ -6,7 +6,7 @@ require_once("../../database/database.php");
 $response = array();
 
 try {
-    $sql = "SELECT * FROM biciclette";
+    $sql = "SELECT * FROM biciclette ORDER BY distanzaPercorsa DESC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
