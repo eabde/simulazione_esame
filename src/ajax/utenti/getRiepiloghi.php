@@ -9,10 +9,7 @@ $response = array();
 if (isset($_SESSION['IdUtente'])) {
     $userId = $_SESSION['IdUtente']; 
 
-    $query = "SELECT o.*
-              FROM operazioni o
-              JOIN utenti u ON o.idUtente = ?
-              ORDER BY o.data DESC, o.ora DESC";
+    $query = "SELECT * FROM operazioni WHERE idUtente = ? ORDER BY data DESC, ora DESC";
     if ($stmt = $conn->prepare($query)) {
         $stmt->bind_param("i", $userId);
         $stmt->execute();
