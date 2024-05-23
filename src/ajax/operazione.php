@@ -8,6 +8,7 @@ $response = array();
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // verifica chiavi $_GET
     if (isset($_GET['tipo'], $_GET['idStazione'], $_GET['idUtente'], $_GET['idBicicletta'])) {
+
         $tipo = $_GET['tipo'];
         $idStazione = $_GET['idStazione'];
         $idUtente = $_GET['idUtente'];
@@ -23,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         
         if ($stazioneResult->num_rows > 0) {
             $stazione = $stazioneResult->fetch_assoc();
-
             $latitudine = $stazione['latitudine'];
             $longitudine = $stazione['longitudine'];
 
@@ -40,7 +40,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                 if ($stmt->execute()) {
                     $response['status'] = "success";
-                    $response['message'] = "Bicicletta noleggiata con successo";
+                    $response['message'] = "Operazione conclusa con successo";
+                    echo json_encode($response);
+                    
+                    ignore_user_abort(true);
+                    set_time_limit(0);
+                    
+                    //loop infinito per simulare il noleggio finchè non riconsegna la bici
+                    while (true) {
+                        // controllo se esiste un'operazione di riconsegna per questa bicicletta
+                        $checkRiconsegnaQuery = "SELECT tipo FROM operazioni WHERE idBicicletta = ? ORDER BY ID DESC LIMIT 1";
+                        $stmt = $conn->prepare($checkRiconsegnaQuery);
+                        $stmt->bind_param("i", $idBicicletta);
+                        $stmt->execute();
+                        $riconsegnaResult = $stmt->get_result();
+                        //una bici puo essere noleggiata più volte anche dopo la riconsegna
+                        if ($riconsegnaResult->num_rows > 0) {
+                            $ultimoTipoOperazione = $riconsegnaResult->fetch_assoc()['tipo'];
+                            if ($ultimoTipoOperazione === 'riconsegna') {
+                                break; // se l'ultima operazione è una riconsegna, esco dal ciclo
+                            }
+                        }
+                        
+                        sleep(30); //ogni 30 secondi cambia posizione
+                        
+                        //chiamata cURL per eseguire simulaSpostamento.php e aggiornare i dati nel DB
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, "http://localhost/simulazione_esame/src/ajax/simulaSpostamento.php?id=" . $idBicicletta);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_exec($ch);
+                        curl_close($ch);
+                    }
+
                 } else {
                     $response['status'] = "error";
                     $response['message'] = "Errore durante il noleggio della bicicletta. Riprova";
@@ -64,6 +95,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $response['message'] = "Richiesta non valida";
 }
 
-echo json_encode($response);
 $conn->close();
 ?>
